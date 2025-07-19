@@ -48,9 +48,11 @@ jobs:
         if: always()
         run: ls -R build/reports || true
 
-      - name: Upload Cucumber HTML Report
+      - name: Upload All HTML Reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: cucumber-report
-          path: build/reports/tests/cucumber-report.html
+          name: ui-test-reports
+          path: |
+            build/reports/**/*.html
+
