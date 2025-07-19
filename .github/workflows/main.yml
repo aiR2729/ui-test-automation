@@ -9,9 +9,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    container:
-      image: selenium/standalone-chrome:latest
-      options: --shm-size=2g
 
     steps:
       - name: Checkout Repository
@@ -36,6 +33,14 @@ jobs:
       - name: Grant Execute Permission to Gradle
         run: chmod +x ./gradlew
 
+      - name: Install Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+      - name: Show Chrome version
+        run: google-chrome --version
+
       - name: Run UI Tests
         run: ./gradlew clean testCucumber --info
 
@@ -48,4 +53,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: cucumber-report
-          path: build/reports/cucumber-report.html
+          path: build/reports/tests/cucumber-report.html
